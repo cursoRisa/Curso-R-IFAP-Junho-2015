@@ -1,0 +1,19 @@
+plot(pan, xaxt="n", yaxt="n", box=FALSE, axes=FALSE, legend=FALSE, col=cores)  
+
+# drawExtent
+box <- drawExtent() # clicar em 2 cantos
+
+# definir a extensão usando box 
+plot(pan, ext=box, xaxt="n", yaxt="n", box=FALSE, axes=FALSE, legend=FALSE, col=cores)  
+plot(pan, ext=box/2, xaxt="n", yaxt="n", box=FALSE, axes=FALSE, legend=FALSE, col=cores)  
+
+# zoom
+plot(pan, xaxt="n", yaxt="n", box=FALSE, axes=FALSE, legend=FALSE, col=cores)  
+zoom(pan, new=FALSE, xaxt="n", yaxt="n", box=FALSE, axes=FALSE, legend=FALSE, col=cores)
+
+# click devolve valor do pixel
+vals<-click(pan)
+
+# locator devolve lista de coordenadas
+pts <- locator() # devolve uma lista de coordenadas; parar com <ESC>
+polygon(cbind(pts$x,pts$y),border="red") # adiciona à imagem o polígono formado pelos pontos digitalizados
