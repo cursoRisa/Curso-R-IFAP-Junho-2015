@@ -1,0 +1,32 @@
+library(raster)
+library(rgdal)
+library(sp)
+library(rgeos)
+#library("gdalUtils") # função remove_file_extension
+
+library(grDevices)
+
+# pasta de trabalho
+pasta.de.trabalho<-"Y:\\Aulas\\sigs_com_R\\dados"
+docs<-"Y:\\Aulas\\sigs_com_R\\docs"
+setwd(pasta.de.trabalho)
+# variával para indicar que se pretende imprimir gráficos em ficheiro
+grafico.para.ficheiro<-FALSE
+
+# LER COM RASTER
+# ler geotiff com raster: devolve raster object
+# raster atribui CRS ao objecto
+fich<-"landsat8pan.tif" # 4.5 Mb
+pan<-raster(fich) # lê ficheiro e cria um objecto RasterLayer com slots @file, @data,... @crs,...
+str(pan)
+print(pan@crs)
+cores<-gray(seq(0,1,length.out=100))
+plot(pan,col=cores)
+
+if (grafico.para.ficheiro)  png(paste(aulas,"imagem_pan_tons_cinzento_legenda_horizontal.png",sep="\\"), width=800, height=800, res=120)
+plot(pan,  xaxt="n", yaxt="n", box=FALSE, axes=FALSE, col=cores,horizontal=TRUE)
+if (grafico.para.ficheiro) graphics.off()
+
+# EXPORTAR raster para GeoTIFF
+writeRaster(pan,file="pan.tif",overwrite=TRUE)
+
